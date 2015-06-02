@@ -1,0 +1,10 @@
+run: HelloWorld
+	java HelloWorld
+
+HelloWorld: HelloWorld.java
+	javac HelloWorld.java
+
+Printer: Printer.java
+	javac Printer.java
+
+HelloWorld: Printer
