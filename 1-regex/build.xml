@@ -1,0 +1,10 @@
+<project name="regex" default="compile">
+	<target name="build">
+		<mkdir dir="build"/>
+		<javac srcdir="." destdir="build"/>
+	</target>
+	
+	<target name="compile" depends="build">	
+		<jar jarfile="tools.jar" basedir="build"/>
+	</target>
+</project>
