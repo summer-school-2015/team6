@@ -1,0 +1,15 @@
+<project name="Hello" default="makejar">
+	
+	<target name="makejar" depends = "build">
+		<jar jarfile="hello.jar" basedir="build"/>
+	</target>	
+
+	<target name="build">
+		<mkdir dir="build"/>
+		<javac srcdir="." destdir="build"/>	
+	</target>
+
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+</project>
