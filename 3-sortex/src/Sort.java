@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.*;
 
 /**
  * Created by User on 04/06/2015.
@@ -9,6 +10,8 @@ import java.util.*;
 public class Sort {
 
     static PrintWriter out;
+    static Scanner in;
+    static Pattern p;
 
     static class Shape{
         public double getSquare(){
@@ -73,25 +76,69 @@ public class Sort {
         }
     }
 
+    static boolean ok(String s){
+        Matcher m = p.matcher(s);
+        return m.matches();
+    }
+
+    static int nextInt(){
+        String s = in.next();
+        if (ok(s)){
+            return Integer.parseInt(s);
+        }
+        else{
+            return -1;
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         //Comparator<Shape> c;
-        Scanner in = new Scanner(new FileReader("input.txt"));
+        p = Pattern.compile("\\d+");
+        in = new Scanner(new FileReader("input.txt"));
         out = new PrintWriter("output.txt");
-        int n = in.nextInt();
+        int n = nextInt();
+        if (n == -1){
+            System.err.format("N is lower than zero or not a numeric value");
+            return;
+        }
         ArrayList<Shape> shapes = new ArrayList<Shape>();
-        for (int i = 0; i < n; i++){
+        for (int i = 0; in.hasNext() && i < n; i++){
             String s = in.next();
             if (s.equals("TRIANGLE")){
-                double p = (double)in.nextInt(), h = (double)in.nextInt();
+                double p = (double)nextInt(), h = (double)nextInt();
+                if (p == -1){
+                    System.err.format("P is lower than zero or not a numeric value");
+                    return;
+                }
+                if (h == -1){
+                    System.err.format("H is lower than zero or not a numeric value");
+                    return;
+                }
                 shapes.add(new Triangle(p, h));
             }
             else if (s.equals("RECT")) {
-                double a = (double)in.nextInt(), b = (double)in.nextInt();
+                double a = (double)nextInt(), b = (double)nextInt();
+                if (a == -1){
+                    System.err.format("A is lower than zero or not a numeric value");
+                    return;
+                }
+                if (b == -1){
+                    System.err.format("B is lower than zero or not a numeric value");
+                    return;
+                }
                 shapes.add(new Rectangle(a, b));
             }
-            else{
-                double r = (double)in.nextInt();
+            else if(s.equals("CIRCLE")){
+                double r = (double)nextInt();
+                if (r == -1){
+                    System.err.format("R is lower than zero or not a numeric value");
+                    return;
+                }
                 shapes.add(new Circle(r));
+            }
+            else{
+                i--;
+                System.err.format("Input format violation. Line was ignored.\n");
             }
         }
         assert shapes != null;
